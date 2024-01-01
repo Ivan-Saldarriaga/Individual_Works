@@ -1,0 +1,162 @@
+﻿  Board.cpp
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(46,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  TextureManager.cpp
+  Tiles.cpp
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(46,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(46,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\Tiles.h(49,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(211,62): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(211,45): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(224,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(224,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(229,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(229,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(233,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(233,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(237,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(237,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(241,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(241,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(250,61): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(250,44): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(373,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(380,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(380,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(387,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(387,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(394,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(394,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(401,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(401,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(408,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(408,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(415,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(415,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(422,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(422,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(429,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(429,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(436,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(436,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(443,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\salda\code\SFML_Practice\SFML_Practice\main.cpp(443,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  SFML_Practice.vcxproj -> C:\Users\salda\code\SFML_Practice\x64\Debug\SFML_Practice.exe
