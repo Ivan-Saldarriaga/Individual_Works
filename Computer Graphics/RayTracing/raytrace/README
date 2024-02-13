@@ -1,0 +1,24 @@
+Ivan Saldarriaga
+CAP4730 RayTracing Assignment
+
+Overview:
+Demonstrates the principles of ray tracing. Here you can see a scene I created, change the camerae mode and watch a short animation.
+
+Usage:
+
+1. Open the application
+2. cd into the bin folder
+3. run the 'make' command
+   This should get the .cpp running easily, beacuse everything is contained in the folder itself.
+
+Functionality:
+
+1. Press 'SPACEBAR' to change the camera mode from orthographic to perspective.
+2. Press the '1' key to have the animation start playing (can do from either camera modes!)
+3. Press 's' to STOP the animation at anytime
+4. Press 'ESCAPE' to quit the program!
+
+MISC.
+You can watch the short animations in the output folders.
+Output contains the orthographic recording
+Output2 contains the perspective recording
