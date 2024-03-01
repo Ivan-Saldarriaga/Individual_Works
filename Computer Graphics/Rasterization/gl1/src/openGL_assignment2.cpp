@@ -4,27 +4,39 @@
 #include <GL/glew.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-
+#include "object.h"
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+//setup for adding color per vertex
+struct Verts {
+  glm::vec3 position;
+  glm::vec3 color;  
+};
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 800;
 
 const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
+    "layout (location = 1) in vec3 aColor;\n"
+    "out vec3 vertexColor;\n"
     "void main()\n"
     "{\n"
     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   vertexColor = aColor;\n"
     "}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
+    "in vec3 vertexColor;\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "   FragColor = vec4(vertexColor, 1.0);\n"
     "}\n\0";
 
 int main()
@@ -98,17 +110,57 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices[] = {
-        -0.5f, -.25f, 0.0f, // left  
-         0.5f, -.75f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f, // top   
+    // float vertices[] = {
+    //     -0.5f, -.25f, 0.0f, // left  
+    //      0.5f, -.75f, 0.0f, // right 
+    //      0.0f,  0.5f, 0.0f, // top   
 
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f, -1.0f, 0.0f  // bottom
-    };
-    unsigned int numVertices = sizeof(vertices)/3;
+    //     -0.5f, -0.5f, 0.0f, // left  
+    //      0.5f, -0.5f, 0.0f, // right 
+    //      0.0f, -1.0f, 0.0f  // bottom
+    // };
+    //cout << "hui" << endl;
+    std::vector<Triangle> triangles = parseOBJ("../data/cube.obj");
+    //cout << "hui" << endl;
+    //float vertices[triangles.size()  * 9];
+    vector<Verts> vertices;
+    int vertexIndex = 0;
+     for (const auto& triangle : triangles) {
+        //cout << "try" << endl;
+        Verts v1, v2, v3;
+        v1.position = glm::vec3(triangle.v1.x / 4, triangle.v1.y / 4, triangle.v1.z / 4);
+        v1.color = glm::vec3(1.0f, 0.0f, 0.0f);
 
+        v2.position = glm::vec3(triangle.v2.x / 4, triangle.v2.y / 4, triangle.v2.z / 4);
+        v2.color = glm::vec3(0.0f, 1.0f, 0.0f);
+
+        v3.position = glm::vec3(triangle.v3.x / 4, triangle.v3.y / 4, triangle.v3.z / 4);
+        v3.color = glm::vec3(0.0f, 0.0f, 1.0f); 
+
+        vertices.push_back(v1);
+        vertices.push_back(v2);
+        vertices.push_back(v3);
+        /*
+        // Vertex 1
+        vertices[vertexIndex++] = triangle.v1.x / 4;
+        vertices[vertexIndex++] = triangle.v1.y / 4;
+        vertices[vertexIndex++] = triangle.v1.z / 4;
+
+        // Vertex 2
+        vertices[vertexIndex++] = triangle.v2.x / 4;
+        vertices[vertexIndex++] = triangle.v2.y / 4;
+        vertices[vertexIndex++] = triangle.v2.z / 4;
+
+        // Vertex 3
+        vertices[vertexIndex++] = triangle.v3.x / 4;
+        vertices[vertexIndex++] = triangle.v3.y / 4;
+        vertices[vertexIndex++] = triangle.v3.z / 4;
+        */
+        //cout << "Triangle vertices: [" << triangle.v1.x <<", " << triangle.v1.y << ", " << triangle.v1.z << "] , [" << triangle.v2.x <<", " << triangle.v2.y << ", " << triangle.v2.z << "] , [" << triangle.v3.x <<", " << triangle.v3.y << ", " << triangle.v3.z << "]" << endl;
+
+    }
+    //unsigned int numVertices = sizeof(vertices)/sizeof(float)/3;
+    unsigned int numVertices = vertices.size();
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -116,11 +168,13 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Verts), &vertices[0], GL_STATIC_DRAW);
+    //Position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Verts), (void*)offsetof(Verts, position));
     glEnableVertexAttribArray(0);
-
+    //color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Verts), (void*)offsetof(Verts, color));
+    glEnableVertexAttribArray(1);
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
 
@@ -131,7 +185,13 @@ int main()
 
     // uncomment this call to draw in wireframe polygons.
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+    // std::cout << "hello" << endl;
+    // std::vector<Triangle> triangles = parseOBJ("../data/cube.obj");
+    // std::cout << "read?" << endl;
+    // // Output the triangle vertices
+    // for (const auto& triangle : triangles) {
+    //     std::cout << "Triangle vertices: [" << triangle.v1.x <<", " << triangle.v1.y << ", " << triangle.v1.z << "] , [" << triangle.v2.x <<", " << triangle.v2.y << ", " << triangle.v2.z << "] , [" << triangle.v3.x <<", " << triangle.v3.y << ", " << triangle.v3.z << "]" << endl;
+    // }
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
