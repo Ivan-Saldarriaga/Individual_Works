@@ -8,6 +8,12 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+glm::vec3 translate = glm::vec3(0.0f);
+glm::vec3 scale = glm::vec3(1.0f);
+glm::vec3 rotate = glm::vec3(0.0f);
+    
 //setup for adding color per vertex
 struct Verts {
   glm::vec3 position;
@@ -26,9 +32,10 @@ const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "layout (location = 1) in vec3 aColor;\n"
     "out vec3 vertexColor;\n"
+    "uniform mat4 modelMatrix;"
     "void main()\n"
     "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   gl_Position = modelMatrix * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "   vertexColor = aColor;\n"
     "}\0";
 const char *fragmentShaderSource = "#version 330 core\n"
@@ -120,13 +127,10 @@ int main()
     //      0.0f, -1.0f, 0.0f  // bottom
     // };
     //cout << "hui" << endl;
-    std::vector<Triangle> triangles = parseOBJ("../data/cube.obj");
-    //cout << "hui" << endl;
-    //float vertices[triangles.size()  * 9];
+    std::vector<Triangle> triangles = parseOBJ("../data/shark.obj");
     vector<Verts> vertices;
     int vertexIndex = 0;
-     for (const auto& triangle : triangles) {
-        //cout << "try" << endl;
+    for (const auto& triangle : triangles) {
         Verts v1, v2, v3;
         v1.position = glm::vec3(triangle.v1.x / 4, triangle.v1.y / 4, triangle.v1.z / 4);
         v1.color = glm::vec3(1.0f, 0.0f, 0.0f);
@@ -140,6 +144,19 @@ int main()
         vertices.push_back(v1);
         vertices.push_back(v2);
         vertices.push_back(v3);
+    }
+
+    // MODEL TRANSFORMATION?!
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+   
+    modelMatrix = glm::translate(modelMatrix, translate);
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
+    modelMatrix = glm::scale(modelMatrix, scale);
+    unsigned int modelMatrixLocation = glGetUniformLocation(shaderProgram, "modelMatrix");
+    glUseProgram(shaderProgram);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         /*
         // Vertex 1
         vertices[vertexIndex++] = triangle.v1.x / 4;
@@ -158,7 +175,6 @@ int main()
         */
         //cout << "Triangle vertices: [" << triangle.v1.x <<", " << triangle.v1.y << ", " << triangle.v1.z << "] , [" << triangle.v2.x <<", " << triangle.v2.y << ", " << triangle.v2.z << "] , [" << triangle.v3.x <<", " << triangle.v3.y << ", " << triangle.v3.z << "]" << endl;
 
-    }
     //unsigned int numVertices = sizeof(vertices)/sizeof(float)/3;
     unsigned int numVertices = vertices.size();
     unsigned int VBO, VAO;
@@ -199,7 +215,13 @@ int main()
         // input
         // -----
         processInput(window);
-
+        
+        glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
+        modelMatrix = glm::translate(modelMatrix, translate);
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
+        modelMatrix = glm::scale(modelMatrix, scale);
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -207,6 +229,7 @@ int main()
 
         // draw our first triangle
         glUseProgram(shaderProgram);
+        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawArrays(GL_TRIANGLES, 0, numVertices);
         // glBindVertexArray(0); // unbind our VA no need to unbind it every time 
@@ -235,6 +258,42 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    float movementVal = 0.01f;
+    float rotateVal = 0.5f;
+    float scaleVal = 0.01f;
+    if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        translate.y += movementVal;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+        translate.y -= movementVal;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+        translate.x -= movementVal;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        translate.x += movementVal;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+        rotate.y += rotateVal;
+        rotate.x += rotateVal;
+        rotate.z += rotateVal;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS){
+        scale.x += scaleVal / 4;
+        scale.y += scaleVal / 4;
+        scale.z += scaleVal / 4;
+    }
+    else if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+        scale.x -= scaleVal;
+        scale.y -= scaleVal;
+        scale.z -= scaleVal;
+        if(scale.x <= 0){
+            scale.x = 0.01;
+            scale.y = 0.01;
+            scale.z = 0.01;
+        }
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
