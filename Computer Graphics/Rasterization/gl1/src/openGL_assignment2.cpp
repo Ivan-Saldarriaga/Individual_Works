@@ -95,7 +95,7 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    //FOR CPU
+    // FOR CPU
     // string vertexShaderSrc = readShaders("../shaders/source_cpu.vs");
     // string fragmentShaderSrc = readShaders("../shaders/source_cpu.fs");
     string vertexShaderSrc = readShaders("../shaders/source.vs");
@@ -189,13 +189,12 @@ int main()
     scale = initialScale;
     modelMatrix = glm::scale(modelMatrix, scale);
 
-    
-    //CPU:
-    // for (auto &vertex : vertices)    {
-    //     // Apply transformations to vertex positions
-    //     vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
-    // } 
-    //GPU:
+    // CPU:
+    //  for (auto &vertex : vertices)    {
+    //      // Apply transformations to vertex positions
+    //      vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
+    //  }
+    // GPU:
     unsigned int modelMatrixLocation = glGetUniformLocation(shaderProgram, "modelMatrix");
     glUseProgram(shaderProgram);
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
@@ -206,7 +205,6 @@ int main()
     glGenBuffers(1, &VBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
-    
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Verts), &vertices[0], GL_STATIC_DRAW);
@@ -226,12 +224,12 @@ int main()
     // render loop
     // -----------
 
-     auto end = std::chrono::high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
     cout << "Number of Triangles: " << triangles.size() << endl;
     std::cout << "Initialization took " << duration.count() << " seconds" << std::endl;
-    // FOR CPU 
-    //scale = glm::vec3(1.0f);
+    // FOR CPU
+    // scale = glm::vec3(1.0f);
     while (!glfwWindowShouldClose(window))
     {
         // input
@@ -243,13 +241,12 @@ int main()
         modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
         modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
         modelMatrix = glm::scale(modelMatrix, scale);
-        //FOR CPU
-        // if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        // {
-        //     // Update vertex data only when scaling keys are pressed
-        //     glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
-            
-            
+        // FOR CPU
+        //  if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        //  {
+        //      // Update vertex data only when scaling keys are pressed
+        //      glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
+
         //     modelMatrix = glm::translate(modelMatrix, translate);
         //     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
         //     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
@@ -268,7 +265,7 @@ int main()
         // glBindBuffer(GL_ARRAY_BUFFER, VBO);
         // glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Verts), &vertices[0]);
         // glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -279,8 +276,7 @@ int main()
         glUseProgram(shaderProgram);
         // GPU
         glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-        
-        
+
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawArrays(GL_TRIANGLES, 0, numVertices);
         // glBindVertexArray(0); // unbind our VA no need to unbind it every time
