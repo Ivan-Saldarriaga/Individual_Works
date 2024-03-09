@@ -96,10 +96,10 @@ int main()
     // build and compile our shader program
     // ------------------------------------
     //FOR CPU
-    // string vertexShaderSrc = readShaders("../shaders/source_cpu.vs");
-    // string fragmentShaderSrc = readShaders("../shaders/source_cpu.fs");
-    string vertexShaderSrc = readShaders("../shaders/source.vs");
-    string fragmentShaderSrc = readShaders("../shaders/source.fs");
+    string vertexShaderSrc = readShaders("../shaders/source_cpu.vs");
+    string fragmentShaderSrc = readShaders("../shaders/source_cpu.fs");
+    // string vertexShaderSrc = readShaders("../shaders/source.vs");
+    // string fragmentShaderSrc = readShaders("../shaders/source.fs");
 
     // vertex shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -191,14 +191,14 @@ int main()
 
     
     //CPU:
-    // for (auto &vertex : vertices)    {
-    //     // Apply transformations to vertex positions
-    //     vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
-    // } 
+    for (auto &vertex : vertices)    {
+        // Apply transformations to vertex positions
+        vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
+    } 
     //GPU:
-    unsigned int modelMatrixLocation = glGetUniformLocation(shaderProgram, "modelMatrix");
-    glUseProgram(shaderProgram);
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    // unsigned int modelMatrixLocation = glGetUniformLocation(shaderProgram, "modelMatrix");
+    // glUseProgram(shaderProgram);
+    // glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     //
     unsigned int numVertices = vertices.size();
     unsigned int VBO, VAO;
@@ -231,43 +231,43 @@ int main()
     cout << "Number of Triangles: " << triangles.size() << endl;
     std::cout << "Initialization took " << duration.count() << " seconds" << std::endl;
     // FOR CPU 
-    //scale = glm::vec3(1.0f);
+    scale = glm::vec3(1.0f);
     while (!glfwWindowShouldClose(window))
     {
         // input
         // -----
         processInput(window);
-        glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
-        modelMatrix = glm::translate(modelMatrix, translate);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
-        modelMatrix = glm::scale(modelMatrix, scale);
+        // glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
+        // modelMatrix = glm::translate(modelMatrix, translate);
+        // modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
+        // modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
+        // modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
+        // modelMatrix = glm::scale(modelMatrix, scale);
         //FOR CPU
-        // if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        // {
-        //     // Update vertex data only when scaling keys are pressed
-        //     glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
+        if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        {
+            // Update vertex data only when scaling keys are pressed
+            glm::mat4 modelMatrix = glm::mat4(1.0f); // Initialize as identity matrix
             
             
-        //     modelMatrix = glm::translate(modelMatrix, translate);
-        //     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
-        //     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
-        //     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
-        //     modelMatrix = glm::scale(modelMatrix, scale);
-        //     for (auto &vertex : vertices)
-        //     {
-        //         // Apply transformations to vertex positions
-        //         vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
-        //     }
-        //     // reset all values or it will save it
-        //     translate = glm::vec3(0.0f);
-        //     scale = glm::vec3(1.0f);
-        //     rotateVec = glm::vec3(0.0f);
-        // }
-        // glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Verts), &vertices[0]);
-        // glBindBuffer(GL_ARRAY_BUFFER, 0);
+            modelMatrix = glm::translate(modelMatrix, translate);
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.x), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotate around X axis
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.y), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotate around Y axis
+            modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateVec.z), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around Z axis
+            modelMatrix = glm::scale(modelMatrix, scale);
+            for (auto &vertex : vertices)
+            {
+                // Apply transformations to vertex positions
+                vertex.position = glm::vec3(modelMatrix * glm::vec4(vertex.position, 1.0f));
+            }
+            // reset all values or it will save it
+            translate = glm::vec3(0.0f);
+            scale = glm::vec3(1.0f);
+            rotateVec = glm::vec3(0.0f);
+        }
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Verts), &vertices[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         // render
         // ------
@@ -278,7 +278,7 @@ int main()
         // draw our first triangle
         glUseProgram(shaderProgram);
         // GPU
-        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        //glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
         
         
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized

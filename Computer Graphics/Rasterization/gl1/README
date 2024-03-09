@@ -2,7 +2,7 @@ Ivan Saldarriaga
 CAP4730 RayTracing Assignment
 
 Overview:
-Demonstrates the principles of ray tracing. Here you can see a scene I created, change the camerae mode and watch a short animation.
+Demonstrates the basics of OPENGL and model transformations.
 
 Usage:
 
@@ -10,15 +10,14 @@ Usage:
 2. cd into the bin folder
 3. run the 'make' command
    This should get the .cpp running easily, beacuse everything is contained in the folder itself.
+   Note: This program is designed for GPU implementation (though the CPU implementation is comment out).
+   - If instead, you want to run the CPU version navigate to the CPU_Version folder, copy the code and paste it in the src folder .cpp and run the makefile after saving
 
 Functionality:
 
-1. Press 'SPACEBAR' to change the camera mode from orthographic to perspective.
-2. Press the '1' key to have the animation start playing (can do from either camera modes!)
-3. Press 's' to STOP the animation at anytime
-4. Press 'ESCAPE' to quit the program!
+1. Press/Hold 'Up/Down/Left/Right' arrow keys to translate the object in different directions
+2. Press/Hold the 'R' key to rotate the model (it rotates along all axes at once)
+3. Press/Hold 'S' key to skrink the model (scalilng down)
+4. Press/Hold the 'G' key to grow the model (scaling up)
+5. Press 'ESCAPE' to quit the program!
 
-MISC.
-You can watch the short animations in the output folders.
-Output contains the orthographic recording
-Output2 contains the perspective recording
