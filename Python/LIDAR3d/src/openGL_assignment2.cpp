@@ -9,17 +9,17 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <cmath> 
 #include <vector>
+#include <random>
 //////////// DEFINITIONS ///////////////
-// Camera parameters
-glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-float cameraYaw = -90.0f;
-float cameraPitch = 0.0f;
 
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
+bool rain = false;
+float randomFloat()
+{
+    float random = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX / 0.3f);
 
+    return random;
+}
+ 
 void fillPoints(vector<glm::vec3>& points){
     if (!parsePoints(points)) {
         std::cerr << "Failed to parse points\n";
@@ -53,6 +53,10 @@ void fillPoints(vector<glm::vec3>& points){
     }
 }
 void setColorByDistance(float distance, glm::vec3& color){
+    if (rain == true){
+        float rainChange = randomFloat();
+        distance += rainChange;
+    }
     if (distance < 0.5) {
         color = glm::vec3(1.0f, 0.0f, 0.0f); // Red
     } else if (distance < 1.0) {
@@ -72,7 +76,7 @@ void processInput(GLFWwindow *window, vector<glm::vec3>& points)
         glfwSetWindowShouldClose(window, true);
 
     float movementVal = 0.001f;
-    float theta = 0.005f;
+    float theta = 0.05f;
     float scaleVal = 0.001f;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
@@ -140,6 +144,10 @@ void processInput(GLFWwindow *window, vector<glm::vec3>& points)
             point.y = newY;
         }
     }
+    else if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS){
+        rain = true;
+        std::cout << rain << std::endl;
+    }
 }
 
 int main() {
@@ -177,9 +185,6 @@ int main() {
 
     // Rendering loop
     while (!glfwWindowShouldClose(window)) {
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
         processInput(window, points);
 
         // Clear the color buffer
